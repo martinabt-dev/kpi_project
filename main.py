@@ -54,4 +54,5 @@ result = goexplore_df.groupby(group[group_choice]).agg(choice = (columns[column_
 st.write(result)
 
 if group_choice in ["Month", "Year", "Quarter"]:
+    result.index = result.index.to_timestamp()
     st.line_chart(result)
