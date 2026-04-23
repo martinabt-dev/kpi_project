@@ -1,0 +1,1 @@
+streamlit run C:\Users\User\Desktop\WBS\project_3\main.py
