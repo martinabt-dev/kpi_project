@@ -1,19 +1,13 @@
-import pandas as pd
 import streamlit as st
+import plotly.express as px
+from data_loader import load_data
 
-# import csv files as df
-retailers_df = pd.read_csv('raw/retailers.csv', decimal=',')
-methods_df = pd.read_csv('raw/methods.csv', decimal=',')
-daily_sales_df = pd.read_csv('raw/daily_sales.csv', decimal=',')
-products_df = pd.read_csv('raw/products.csv', decimal=',')
-
-goexplore_df = daily_sales_df.merge(retailers_df, on='Retailer code', how='left')
-goexplore_df = goexplore_df.merge(methods_df, on='Order method code', how='left')
-goexplore_df = goexplore_df.merge(products_df, on='Product number', how='left')
-goexplore_df['Date'] = pd.to_datetime(goexplore_df['Date'], dayfirst=True)
-# st.write(goexplore_df)
+goexplore_df = load_data()
 
 st.set_page_config(layout="wide")
+
+st.write(goexplore_df.describe())
+st.write(f"Number of different Retailer: {goexplore_df['Retailer name'].nunique()}")
 col1, col2, col3 = st.columns(3)
 group = {
     "Month" : goexplore_df['Date'].dt.to_period('M'),
@@ -38,7 +32,8 @@ agg = {
 columns = {
     "Quantity" : "Quantity",
     "Unit price" : "Unit price_x",
-    "Unit sale price" : "Unit sale price"
+    "Unit sale price" : "Unit sale price",
+    "Revenue" : "revenue"
 }
 
 with col1:
@@ -56,3 +51,14 @@ st.write(result)
 if group_choice in ["Month", "Year", "Quarter"]:
     result.index = result.index.to_timestamp()
     st.line_chart(result)
+elif group_choice == "Country":
+    result_df = result.reset_index()
+    result_df.columns = ["Country", f"{agg_choice} {column_choice}"]
+    fig = px.choropleth(
+        result_df,
+        locations="Country",
+        locationmode="country names",
+        color=f"{agg_choice} {column_choice}",
+        color_continuous_scale="Blues"
+    )
+    st.plotly_chart(fig)
