@@ -15,3 +15,9 @@ with col1:
     st.plotly_chart(fig)
 
 col5, col6 = st.columns(2)
+
+
+#st.components.v1.iframe(
+#    "https://lookerstudio.google.com/embed/reporting/XXXX/page/XXXX",
+#    height=600
+#)
