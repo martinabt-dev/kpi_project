@@ -14,9 +14,7 @@ def load_data():
     goexplore_df['Date'] = pd.to_datetime(goexplore_df['Date'], dayfirst=True)
     goexplore_df["revenue"] = goexplore_df["Quantity"] * goexplore_df["Unit sale price"]
     goexplore_df["profit"] = (goexplore_df["Unit sale price"] - goexplore_df["Unit cost"]) * goexplore_df["Quantity"]
-    goexplore_df["gross_margin_%"] = (goexplore_df["Unit cost"] - goexplore_df["Unit sale price"]) / goexplore_df["Unit sale price"] * 100
-    goexplore_df["gross_margin_%_2"] = (goexplore_df["revenue"] - goexplore_df["Unit cost"]) / goexplore_df[
-        "Unit sale price"] * 100
+    goexplore_df["discount"] = goexplore_df["Unit price_x"] - goexplore_df["Unit sale price"]
+    goexplore_df["gross_margin_%"] = (goexplore_df["Unit sale price"] - goexplore_df["Unit cost"]) / goexplore_df["Unit sale price"] * 100
     goexplore_df["unit_price_diff"] = goexplore_df["Unit price_x"] - goexplore_df["Unit price_y"]
-    goexplore_df["gross_margin_%"] = (goexplore_df["Unit cost"] - goexplore_df["Unit sale price"]) / goexplore_df["Unit sale price"] * 100
     return goexplore_df

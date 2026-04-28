@@ -35,7 +35,9 @@ columns = {
     "Quantity" : "Quantity",
     "Unit price" : "Unit price_x",
     "Unit sale price" : "Unit sale price",
+    "Unit cost" : "Unit cost",
     "Revenue" : "revenue",
+    "Discount" : "discount",
     "Profit" : "profit",
     "Gross Margin" : "gross_margin_%"
 }
